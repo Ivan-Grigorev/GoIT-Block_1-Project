@@ -31,7 +31,7 @@ class NoteRecord:
 
     def tag_note_search(self, tag):
         tag_list = []
-        for i in map(lambda x: x['tag'], self.data):
+        for i in map(lambda x: x['tag'], self.record):
             tag_list.extend(i)
         tag_list = set(tag_list)
         tag_list_of_dict = []
@@ -39,7 +39,7 @@ class NoteRecord:
             ratio = int(difflib.SequenceMatcher(None, str(tag), str(item)).ratio() * 100)
             if ratio > 50:
                 user_tag = item
-                for i in self.data:
+                for i in self.record:
                     if user_tag in i['tag']:
                         tag_list_of_dict.append({ratio: i['note']})
         sort_list = []
@@ -63,22 +63,22 @@ class NoteRecord:
         with open(self.filename, 'r') as file:
             return json.load(file)
 
-
-while True:
-    command = input(': ')
-    sep_val = command.split(' ')
-    if sep_val[0] == 'note' and sep_val[1] != 'change':
-        tag_index = sep_val.index('-tag') if '-tag' in sep_val else len(sep_val)
-        main_note = NoteRecord(
-            ' '.join(sep_val[1:tag_index]),
-            sep_val[tag_index + 1:] if tag_index != len(sep_val) else None
-        )
-        try:
-            note_list = main_note.note_deserialize()
-            main_note.note_serialize(note_list)
-        except FileNotFoundError:
-            main_note.note_serialize()
-    elif sep_val[0] == '.':
-        break
-    else:
-        print('Try again!')
+#
+# while True:
+#     command = input(': ')
+#     sep_val = command.split(' ')
+#     if sep_val[0] == 'note' and sep_val[1] != 'change':
+#         tag_index = sep_val.index('-tag') if '-tag' in sep_val else len(sep_val)
+#         main_note = NoteRecord(
+#             ' '.join(sep_val[1:tag_index]),
+#             sep_val[tag_index + 1:] if tag_index != len(sep_val) else None
+#         )
+#         try:
+#             note_list = main_note.note_deserialize()
+#             main_note.note_serialize(note_list)
+#         except FileNotFoundError:
+#             main_note.note_serialize()
+#     elif sep_val[0] == '.':
+#         break
+#     else:
+#         print('Try again!')
