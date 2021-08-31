@@ -52,7 +52,7 @@ def main():
                 ratio = int(difflib.SequenceMatcher(None, command, value).ratio() * 100)
                 if ratio > 50:
                     fixed_string = value[0] + value[1:]
-                    print(f"You entered unknown command - {command}. Maybe it`s {fixed_string}? Try again.")
+                    print(f"You entered unknown command <<{command}>>. Maybe it`s <<{fixed_string}>>? Try again.")
                 elif ratio < 50:
                     continue
 
@@ -79,7 +79,7 @@ def help_command():
     then some few words from note and enter it;
 
     4. "show contact" - for get all contact information
-    write "show contact" then .........name and enter it;
+    write "show contact" then name and enter it;
 
     5. "show birthday" - for show a list of contacts who
     have a birthday after a specified number of days from
@@ -90,13 +90,13 @@ def help_command():
     write "show all" and enter command;
 
     7. "show note" - for search note write "show note"
-    then few words from note or tag and enter it;
+    then title or tag and enter it;
 
     8. "edit contact" - for edit contact information write
-    "edit contact" then ....... enter it;
+    "edit contact" then name and enter it;
 
     9. "edit notes" - for edit notes write "edit notes"
-    then ............. enter it;
+    then title and enter it;
 
     10. "search tags" - for search and sort notes by tags
     write "search tags" then tag and enter it;
@@ -105,11 +105,11 @@ def help_command():
     "sort folders" then path to folder and enter it;
 
     12. "delete contact" - for delete name and contact
-    information in Address book write "delete" then
-    ............... and enter it;
+    information in Address book write "delete contact" then
+    name and enter it;
 
     13. "delete note" - for delete note write "delete note"
-    ....................enter it;
+    then title and enter it;
 
     14. "help", "reference" - for ask reference how to
     use Personal Assistant write "help" or "reference"
