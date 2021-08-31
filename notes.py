@@ -60,8 +60,11 @@ class NoteRecord:
                 json.dump([self.record], file, sort_keys=True, indent=4)
 
     def note_deserialize(self):
-        with open(self.filename, 'r') as file:
-            return json.load(file)
+        try:
+            with open(self.filename, 'r') as file:
+                return json.load(file)
+        except FileNotFoundError:
+            return NoteRecord()
 
 #
 # while True:
