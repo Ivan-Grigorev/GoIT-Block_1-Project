@@ -1,16 +1,19 @@
+from notes import Note, NoteRecord
+from sort_folder import sort_folder_command
 import difflib
 
 
 def main():
     print(f"COMMAND LINE INTERFACE\nYour Personal Assistant\n" + "=" * 23)
     print("If you wont to read reference to Personal Assistant,\nEnter <<help>> or <<reference>>.")
+    NoteRecord().note_deserialize()
     while True:
         command = input("Enter your command\n>>").lower()
         sep_command = command.split(" ")
         if sep_command[0] == "add" and sep_command[1] == "contact":
             pass
         if sep_command[0] == "add" and sep_command[1] == "notes":
-            pass
+            note_record = NoteRecord(note=sep_command[2:])
         if sep_command[0] == "add" and sep_command[1] == "tag":
             pass
         if sep_command[0] == "show" and sep_command[1] == "contact":
@@ -28,7 +31,7 @@ def main():
         if sep_command[0] == "sort" and sep_command[1] == "tags":
             pass
         if sep_command[0] == "sort" and sep_command[1] == "folders":
-            pass
+            sort_folder_command(sep_command[2:])
         if sep_command[0] == "delete" and sep_command[1] == "contact":
             pass
         if sep_command[0] == "delete" and sep_command[1] == "note":
@@ -36,6 +39,7 @@ def main():
         if command == "help" or command == "reference":
             help_command()
         elif command == "good bye" or command == "close" or command == "exit":
+            NoteRecord().note_serialize()
             print("Good bye!\nHope see you soon!")
             break
         else:
@@ -64,9 +68,9 @@ def help_command():
     save Notes and sort files in folders.
 
     Personal Assistant has a commands:
-    1. "add contact" - for add name, address, contact information
-    (phone, e-mail) and birthday to Address book write
-    "add" then all details and enter it;
+    1. "add contact" - for add name, address, contact
+    information (phone, e-mail) and birthday to Address
+    book write "add" then all details and enter it;
 
     2. "add notes" - for add notes write "add notes" then
     your note and enter it;
@@ -98,7 +102,7 @@ def help_command():
     ...................... enter it;
 
     11. "sort folders" - for sort files in folders write
-    "sort folders" ................... enter it;
+    "sort folders" then path to folder and enter it;
 
     12. "delete contact" - for delete name and contact
     information in Address book write "delete" then
