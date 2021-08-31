@@ -139,4 +139,3 @@ class AddressBook(UserDict):
         for key, val in self.data.items():
             print(f'{str(key)}:{str(val)}')
         print(f'Total contacts: {len(self.data)}')
-
