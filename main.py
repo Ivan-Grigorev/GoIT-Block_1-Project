@@ -1,46 +1,68 @@
-from notes import Note, NoteRecord
+from addressbook import AddressBook, Record
+from notes import NoteRecord
 from sort_folder import sort_folder_command
 import difflib
+import pickle
 
 
 def main():
     print(f"COMMAND LINE INTERFACE\nYour Personal Assistant\n" + "=" * 23)
     print("If you wont to read reference to Personal Assistant,\nEnter <<help>> or <<reference>>.")
-    NoteRecord().note_deserialize()
+    try:
+        with open('data.bin', 'rb') as bin_file:
+            note_list = pickle.load(bin_file)
+            last_id = note_list[-1]['id']
+            NoteRecord.counter = last_id
+    except FileNotFoundError:
+        note_list = []
+    try:
+        with open('data_test.bin', 'rb') as f:
+            address_book = pickle.load(f)
+    except FileNotFoundError:
+        address_book = AddressBook()
     while True:
         command = input("Enter your command\n>>").lower()
         sep_command = command.split(" ")
-        if sep_command[0] == "add" and sep_command[1] == "contact":
+        if sep_command[0] == "add" and sep_command[1] == "contact" and len(sep_command) > 2:
+            address_book.add_record(Record(sep_command[2].title(), sep_command[3], sep_command[4],
+                                           sep_command[4], sep_command[5], sep_command[6:]))
+        elif sep_command[0] == "add" and sep_command[1] == "notes":
+            tag_index = sep_command.index('-tag') if '-tag' in sep_command else len(sep_command)
+            NoteRecord.counter += 1
+            main_note = NoteRecord(' '.join(sep_command[2:tag_index]),
+                                   sep_command[tag_index + 2:] if tag_index != len(sep_command) else None)
+            note_list.append(main_note.record)
+        elif sep_command[0] == "add" and sep_command[1] == "tag":
             pass
-        if sep_command[0] == "add" and sep_command[1] == "notes":
-            note_record = NoteRecord(note=sep_command[2:])
-        if sep_command[0] == "add" and sep_command[1] == "tag":
+        elif sep_command[0] == "show" and sep_command[1] == "contact":
+            address_book.find_contact(sep_command[2].title())
+        elif sep_command[0] == "show" and sep_command[1] == "birthday":
+            print(address_book.days_to_birthday(int(sep_command[2])))
+        elif sep_command[0] == "show" and sep_command[1] == "all":
+            address_book.__str__()
+        elif sep_command[0] == "show" and sep_command[1] == "note":
             pass
-        if sep_command[0] == "show" and sep_command[1] == "contact":
+        elif sep_command[0] == "edit" and sep_command[1] == "contact":
+            address_book.edit_contact(sep_command[2].title())
+        elif sep_command[0] == "edit" and sep_command[1] == "note":
             pass
-        if sep_command[0] == "show" and sep_command[1] == "birthday":
+        elif sep_command[0] == "search" and sep_command[1] == "tags":
             pass
-        if sep_command[0] == "show" and sep_command[1] == "all":
-            pass
-        if sep_command[0] == "show" and sep_command[1] == "note":
-            pass
-        if sep_command[0] == "edit" and sep_command[1] == "contact":
-            pass
-        if sep_command[0] == "edit" and sep_command[1] == "note":
-            pass
-        if sep_command[0] == "search" and sep_command[1] == "tags":
-            NoteRecord().tag_note_search(tag=sep_command[2:])
-        if sep_command[0] == "sort" and sep_command[1] == "folders":
+        elif sep_command[0] == "sort" and sep_command[1] == "folders":
             sort_folder_command(sep_command[2:])
-        if sep_command[0] == "delete" and sep_command[1] == "contact":
+            print("Folder just has been sorted!")
+        elif sep_command[0] == "delete" and sep_command[1] == "contact":
+            address_book.delete_contact(sep_command[2].title())
+        elif sep_command[0] == "delete" and sep_command[1] == "note":
             pass
-        if sep_command[0] == "delete" and sep_command[1] == "note":
-            pass
-        if command == "help" or command == "reference":
+        elif command == "help" or command == "reference":
             help_command()
-        elif command == "good bye" or command == "close" or command == "exit":
-            NoteRecord().note_serialize()
+        elif command in ["good bye", "close", "exit", "."]:
+            with open('data_test.bin', 'wb') as f:
+                pickle.dump(address_book, f)
             print("Good bye!\nHope see you soon!")
+            if note_list:
+                NoteRecord().note_serialize(note_list)
             break
         else:
             command_dict = {1: "add contact", 2: "add notes", 3: "add tag", 4: "show contact",
