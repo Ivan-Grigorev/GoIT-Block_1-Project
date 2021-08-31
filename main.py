@@ -7,7 +7,7 @@ import pickle
 
 def main():
     print(f"COMMAND LINE INTERFACE\nYour Personal Assistant\n" + "=" * 23)
-    print("If you wont to read reference to Personal Assistant,\nEnter <<help>> or <<reference>>.")
+    print("If you wont to read reference to Personal Assistant,\nEnter <<help>> or <<reference>>")
     try:
         with open('data.bin', 'rb') as bin_file:
             note_list = pickle.load(bin_file)
