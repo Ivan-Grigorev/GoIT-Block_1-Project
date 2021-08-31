@@ -1,4 +1,4 @@
-from addressbook import AddressBook, Record
+from address_book import AddressBook, Record
 from notes import NoteRecord
 from sort_folder import sort_folder_command
 import difflib
