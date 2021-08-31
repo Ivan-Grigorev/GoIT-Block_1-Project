@@ -94,3 +94,4 @@ def sort_folder_command(sep_command):
             handle_file(Path(sep_command), file)
         item.clear()
     del_empty_folders(Path(sep_command))
+
