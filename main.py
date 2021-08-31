@@ -28,8 +28,8 @@ def main():
             pass
         if sep_command[0] == "edit" and sep_command[1] == "note":
             pass
-        if sep_command[0] == "sort" and sep_command[1] == "tags":
-            pass
+        if sep_command[0] == "search" and sep_command[1] == "tags":
+            NoteRecord().tag_note_search(tag=sep_command[2:])
         if sep_command[0] == "sort" and sep_command[1] == "folders":
             sort_folder_command(sep_command[2:])
         if sep_command[0] == "delete" and sep_command[1] == "contact":
@@ -45,7 +45,7 @@ def main():
         else:
             command_dict = {1: "add contact", 2: "add notes", 3: "add tag", 4: "show contact",
                             5: "show birthday", 6: "show all", 7: "show note", 8: "edit contact",
-                            9: "edit note", 10: "sort tags", 11: "sort folders", 12: "delete contact",
+                            9: "edit note", 10: "search tags", 11: "sort folders", 12: "delete contact",
                             13: "delete note", 14: "help", 15: "reference", 16: "close",
                             17: "exit", 18: "good bye"}
             for value in command_dict.values():
@@ -98,8 +98,8 @@ def help_command():
     9. "edit notes" - for edit notes write "edit notes"
     then ............. enter it;
 
-    10. "sort tags" - for sort tags write "sort tags"
-    ...................... enter it;
+    10. "search tags" - for search and sort notes by tags
+    write "search tags" then tag and enter it;
 
     11. "sort folders" - for sort files in folders write
     "sort folders" then path to folder and enter it;
