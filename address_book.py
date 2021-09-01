@@ -35,14 +35,15 @@ class Phone:
 
     @phone.setter
     def phone(self, phone: str):
-        if re.search("(^\+?(38)?0(67|68|96|97|98|50|66|95|99|63|73|93|89|94)\d{7}$)", re.sub(r'\D', "", phone)):
+        if re.search("(^\+?(38)?0(44|67|68|96|97|98|50|66|95|99|63|73|93|89|94)\d{7}$)", re.sub(r'\D', "", phone)):
             if len(re.sub(r'\D', "", phone)) == 12:
                 self.__phone = '+' + re.sub(r'\D', "", phone)
             else:
                 self.__phone = '+38' + re.sub(r'\D', "", phone)
 
         else:
-            print("Incorrect phone!")
+            print("The phone is not saved because it has an incorrect format\n"
+                  "Try to edit like the example: +38**********")
 
     def __str__(self):
         return f"{self.__phone}"
@@ -62,7 +63,8 @@ class Email:
         if re.search("^[\w\.-]+@[\w\.-]+(\.[\w]+)+", email):
             self.__email = email
         else:
-            print("Incorrect email!")
+            print("The email is not saved because it has an incorrect format \n"
+                  "Try to edit like the example: *****@***.***")
 
     def __str__(self):
         return f"{self.__email}"
@@ -83,7 +85,8 @@ class Birthday:
             if time.strptime(birthday, '%d/%m/%Y'):
                 self.__birthday = birthday
         except ValueError:
-            print('Incorrect date!\nTry to enter like the example: DD/MM/YYYY"')
+            print('The date is not saved because it has an incorrect format \n'
+                  'Try to edit like the example: DD/MM/YYYY')
 
     def __str__(self):
         return f"{self.__birthday}"
@@ -95,7 +98,7 @@ class Address:
         self.__address = address
 
     def __str__(self):
-        return f"{' '.join(self.__address).title()}"
+        return f"{','.join(self.__address).title()}"
 
 
 class Record:
@@ -120,7 +123,32 @@ class AddressBook(UserDict):
                 print(f"{key}: {value}")
 
     def del_contact(self, name):
-        self.data.pop(name)
+        try:
+            question = input("Are you sure?: Y/N ").lower()
+            if question == 'y':
+                self.data.pop(name)
+                print(f'{name} was deleted successfully')
+        except KeyError:
+            print('This contact does not exist in database')
+
+    def edit_contact(self, name):
+        print(self.data[name])
+        edit_option = input("Enter an editable option (phone, email, birthday or address) "
+                            "and changed information:").lower()
+        sep_edit_option = edit_option.split(" ")
+        data = str(self.data[name]).split(',')
+        if sep_edit_option[0] == 'phone':
+            data[0] = sep_edit_option[1]
+            AddressBook.add_record(self, Record(name, data[0], data[1], data[2], data[3:]))
+        if sep_edit_option[0] == 'email':
+            data[1] = sep_edit_option[1]
+            AddressBook.add_record(self, Record(name, data[0], data[1], data[2], data[3:]))
+        if sep_edit_option[0] == 'birthday':
+            data[2] = sep_edit_option[1]
+            AddressBook.add_record(self, Record(name, data[0], data[1], data[2], data[3:]))
+        if sep_edit_option[0] == 'address':
+            data[3] = sep_edit_option[1:]
+            AddressBook.add_record(self, Record(name, data[0], data[1], data[2], data[3:]))
 
     def days_to_birthday(self, number_days):
         EndDate = date.today() + timedelta(days=number_days)
@@ -128,7 +156,7 @@ class AddressBook(UserDict):
         try:
             for key, val in self.data.items():
                 result = re.search(r"\d{1,2}\/\d{1,2}\/\d{4}", str(val)).group()
-                if datetime.strptime(result, "%d/%m/%Y").month == EndDate.month\
+                if datetime.strptime(result, "%d/%m/%Y").month == EndDate.month \
                         and datetime.strptime(result, "%d/%m/%Y").day == EndDate.day:
                     list.append({str(key): str(val)})
         except AttributeError:
