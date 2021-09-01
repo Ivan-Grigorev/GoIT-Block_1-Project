@@ -35,15 +35,14 @@ class Phone:
 
     @phone.setter
     def phone(self, phone: str):
-        if re.search("(^\+?(38)?0(44|67|68|96|97|98|50|66|95|99|63|73|93|89|94)\d{7}$)", re.sub(r'\D', "", phone)):
+        if re.search("(^\+?(38)?0(67|68|96|97|98|50|66|95|99|63|73|93|89|94)\d{7}$)", re.sub(r'\D', "", phone)):
             if len(re.sub(r'\D', "", phone)) == 12:
                 self.__phone = '+' + re.sub(r'\D', "", phone)
             else:
                 self.__phone = '+38' + re.sub(r'\D', "", phone)
-
         else:
             print("The phone is not saved because it has an incorrect format\n"
-                  "Try to edit like the example: +38**********")
+                  "Try to edit like the example: +38(***)*******")
 
     def __str__(self):
         return f"{self.__phone}"
@@ -60,10 +59,10 @@ class Email:
 
     @email.setter
     def email(self, email):
-        if re.search("^[\w\.-]+@[\w\.-]+(\.[\w]+)+", email):
+        if email == '-' or re.search("^[\w\.-]+@[\w\.-]+(\.[\w]+)+", email):
             self.__email = email
         else:
-            print("The email is not saved because it has an incorrect format \n"
+            print("The email is not saved because it has an incorrect format\n"
                   "Try to edit like the example: *****@***.***")
 
     def __str__(self):
@@ -82,10 +81,10 @@ class Birthday:
     @birthday.setter
     def birthday(self, birthday):
         try:
-            if time.strptime(birthday, '%d/%m/%Y'):
+            if birthday == '-' or time.strptime(birthday, '%d/%m/%Y'):
                 self.__birthday = birthday
         except ValueError:
-            print('The date is not saved because it has an incorrect format \n'
+            print('The date is not saved because it has an incorrect format\n'
                   'Try to edit like the example: DD/MM/YYYY')
 
     def __str__(self):
@@ -133,8 +132,8 @@ class AddressBook(UserDict):
 
     def edit_contact(self, name):
         print(self.data[name])
-        edit_option = input("Enter an editable option (phone, email, birthday or address) "
-                            "and changed information:").lower()
+        edit_option = input("Enter an editable option (phone, email, birthday or address)"
+                            " and changed information:").lower()
         sep_edit_option = edit_option.split(" ")
         data = str(self.data[name]).split(',')
         if sep_edit_option[0] == 'phone':
@@ -164,7 +163,6 @@ class AddressBook(UserDict):
         return list
 
     def __str__(self):
-        for key, val in self.data.items():
-            print(f'{str(key)}:{str(val)}')
         print(f'Total contacts: {len(self.data)}')
-
+        for key, val in self.data.items():
+            print(f'{str(key)}:{str(val)}'.removesuffix(','))
