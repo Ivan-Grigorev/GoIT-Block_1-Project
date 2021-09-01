@@ -1,16 +1,18 @@
+import difflib
+import json
+import pickle
+
 from address_book import AddressBook, Record
 from notes import NoteRecord
 from sort_folder import sort_folder_command
-import difflib
-import pickle
 
 
 def main():
     print(f"COMMAND LINE INTERFACE\nYour Personal Assistant\n" + "=" * 23)
     print("If you wont to read reference to Personal Assistant,\nEnter <<help>> or <<reference>>")
     try:
-        with open('data.bin', 'rb') as bin_file:
-            note_list = pickle.load(bin_file)
+        with open('data.json', 'r') as json_file:
+            note_list = json.load(json_file)
             last_id = note_list[-1]['id']
             NoteRecord.counter = last_id
     except FileNotFoundError:
@@ -25,15 +27,20 @@ def main():
         sep_command = command.split(" ")
         if sep_command[0] == "add" and sep_command[1] == "contact" and len(sep_command) > 2:
             address_book.add_record(Record(sep_command[2].title(), sep_command[3], sep_command[4],
-                                           sep_command[4], sep_command[5], sep_command[6:]))
-        elif sep_command[0] == "add" and sep_command[1] == "notes":
+                                           sep_command[5], sep_command[6:]))
+        elif sep_command[0] == "add" and sep_command[1] == "note":
             tag_index = sep_command.index('-tag') if '-tag' in sep_command else len(sep_command)
+            title_index = sep_command.index('-title') if '-title' in sep_command else None
             NoteRecord.counter += 1
             main_note = NoteRecord(' '.join(sep_command[2:tag_index]),
-                                   sep_command[tag_index + 2:] if tag_index != len(sep_command) else None)
+                                   sep_command[tag_index + 1:title_index] if tag_index != len(sep_command) else None,
+                                   sep_command[title_index + 1].title() if title_index else None)
             note_list.append(main_note.record)
         elif sep_command[0] == "add" and sep_command[1] == "tag":
-            pass
+            title_index = sep_command.index('-title') if '-title' in sep_command else None
+            for note in note_list:
+                if note['title'] == sep_command[title_index + 1]:
+                    note['tag'] += (sep_command[2:title_index])
         elif sep_command[0] == "show" and sep_command[1] == "contact":
             address_book.find_contact(sep_command[2].title())
         elif sep_command[0] == "show" and sep_command[1] == "birthday":
@@ -41,20 +48,29 @@ def main():
         elif sep_command[0] == "show" and sep_command[1] == "all":
             address_book.__str__()
         elif sep_command[0] == "show" and sep_command[1] == "note":
-            pass
+            print(note_list)
         elif sep_command[0] == "edit" and sep_command[1] == "contact":
             address_book.edit_contact(sep_command[2].title())
         elif sep_command[0] == "edit" and sep_command[1] == "note":
-            pass
+            for note in note_list:
+                if note['title'] == sep_command[2]:
+                    change_index = sep_command.index('-change') if '-change' in sep_command else None
+                    if change_index:
+                        note['note'] = ' '.join(sep_command[change_index + 1:])
+                    else:
+                        print('You didn`t print text to change!\nTry again!')
         elif sep_command[0] == "search" and sep_command[1] == "tags":
-            pass
+            NoteRecord.tag_search(sep_command[2])
         elif sep_command[0] == "sort" and sep_command[1] == "folders":
             sort_folder_command(sep_command[2:])
-            print("Folder just has been sorted!")
+            print("Your folder just has been sorted!")
         elif sep_command[0] == "delete" and sep_command[1] == "contact":
             address_book.delete_contact(sep_command[2].title())
         elif sep_command[0] == "delete" and sep_command[1] == "note":
-            pass
+            for note in note_list:
+                if note['title'] == sep_command[2]:
+                    note_index = note_list.index(note)
+                    note_list.pop(note_index)
         elif command == "help" or command == "reference":
             help_command()
         elif command in ["good bye", "close", "exit", "."]:
@@ -143,11 +159,9 @@ def help_command():
     Command Line Interface.
 
     Pleasant use!
-
     """
     print(help_command.__doc__)
 
 
 if __name__ == "__main__":
     main()
-
