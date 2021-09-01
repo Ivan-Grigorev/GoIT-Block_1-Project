@@ -45,3 +45,4 @@ class NoteRecord:
     def note_deserialize(self):
         with open(self.filename, 'r') as file:
             return json.load(file)
+
