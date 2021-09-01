@@ -23,76 +23,83 @@ def main():
     except FileNotFoundError:
         address_book = AddressBook()
     while True:
-        command = input("Enter your command\n>>").lower()
-        sep_command = command.split(" ")
-        if sep_command[0] == "add" and sep_command[1] == "contact" and len(sep_command) > 2:
-            address_book.add_record(Record(sep_command[2].title(), sep_command[3], sep_command[4],
-                                           sep_command[5], sep_command[6:]))
-        elif sep_command[0] == "add" and sep_command[1] == "note":
-            tag_index = sep_command.index('-tag') if '-tag' in sep_command else len(sep_command)
-            title_index = sep_command.index('-title') if '-title' in sep_command else None
-            NoteRecord.counter += 1
-            main_note = NoteRecord(' '.join(sep_command[2:tag_index]),
-                                   sep_command[tag_index + 1:title_index] if tag_index != len(sep_command) else None,
-                                   sep_command[title_index + 1].title() if title_index else None)
-            note_list.append(main_note.record)
-        elif sep_command[0] == "add" and sep_command[1] == "tag":
-            title_index = sep_command.index('-title') if '-title' in sep_command else None
-            for note in note_list:
-                if note['title'] == sep_command[title_index + 1]:
-                    note['tag'] += (sep_command[2:title_index])
-        elif sep_command[0] == "show" and sep_command[1] == "contact":
-            address_book.find_contact(sep_command[2].title())
-        elif sep_command[0] == "show" and sep_command[1] == "birthday":
-            print(address_book.days_to_birthday(int(sep_command[2])))
-        elif sep_command[0] == "show" and sep_command[1] == "all":
-            address_book.__str__()
-        elif sep_command[0] == "show" and sep_command[1] == "note":
-            print(note_list)
-        elif sep_command[0] == "edit" and sep_command[1] == "contact":
-            address_book.edit_contact(sep_command[2].title())
-        elif sep_command[0] == "edit" and sep_command[1] == "note":
-            for note in note_list:
-                if note['title'] == sep_command[2]:
-                    change_index = sep_command.index('-change') if '-change' in sep_command else None
-                    if change_index:
-                        note['note'] = ' '.join(sep_command[change_index + 1:])
-                    else:
-                        print('You didn`t print text to change!\nTry again!')
-        elif sep_command[0] == "search" and sep_command[1] == "tags":
-            NoteRecord.tag_search(sep_command[2])
-        elif sep_command[0] == "sort" and sep_command[1] == "folders":
-            sort_folder_command(sep_command[2:])
-            print("Your folder just has been sorted!")
-        elif sep_command[0] == "delete" and sep_command[1] == "contact":
-            address_book.delete_contact(sep_command[2].title())
-        elif sep_command[0] == "delete" and sep_command[1] == "note":
-            for note in note_list:
-                if note['title'] == sep_command[2]:
-                    note_index = note_list.index(note)
-                    note_list.pop(note_index)
-        elif command == "help" or command == "reference":
-            help_command()
-        elif command in ["good bye", "close", "exit", "."]:
-            with open('data_test.bin', 'wb') as f:
-                pickle.dump(address_book, f)
-            print("Good bye!\nHope see you soon!")
-            if note_list:
-                NoteRecord().note_serialize(note_list)
-            break
-        else:
-            command_dict = {1: "add contact", 2: "add notes", 3: "add tag", 4: "show contact",
-                            5: "show birthday", 6: "show all", 7: "show note", 8: "edit contact",
-                            9: "edit note", 10: "search tags", 11: "sort folders", 12: "delete contact",
-                            13: "delete note", 14: "help", 15: "reference", 16: "close",
-                            17: "exit", 18: "good bye"}
-            for value in command_dict.values():
-                ratio = int(difflib.SequenceMatcher(None, command, value).ratio() * 100)
-                if ratio > 50:
-                    fixed_string = value[0] + value[1:]
-                    print(f"You entered unknown command <<{command}>>. Maybe it`s <<{fixed_string}>>? Try again.")
-                elif ratio < 50:
-                    continue
+        try:
+            command = input("Enter your command\n>>").lower()
+            sep_command = command.split(" ")
+            if sep_command[0] == "add" and sep_command[1] == "contact":# and len(sep_command) > 2:
+                address_book.add_record(Record(sep_command[2].title(), sep_command[3], sep_command[4],
+                                               sep_command[5], sep_command[6:]))
+            elif sep_command[0] == "add" and sep_command[1] == "note" and len(sep_command[2:]) != 0:
+                tag_index = sep_command.index('-tag') if '-tag' in sep_command else len(sep_command)
+                title_index = sep_command.index('-title') if '-title' in sep_command else None
+                NoteRecord.counter += 1
+                main_note = NoteRecord(' '.join(sep_command[2:tag_index]),
+                                       sep_command[tag_index + 1:title_index] if tag_index != len(sep_command) else None,
+                                       sep_command[title_index + 1].title() if title_index else None)
+                note_list.append(main_note.record)
+            elif sep_command[0] == "add" and sep_command[1] == "note" and len(sep_command[2:]) == 0:
+                print("You entered empty note!")
+            elif sep_command[0] == "add" and sep_command[1] == "tag":
+                title_index = sep_command.index('-title') if '-title' in sep_command else None
+                for note in note_list:
+                    if note['title'] == sep_command[title_index + 1]:
+                        note['tag'] += (sep_command[2:title_index])
+            elif sep_command[0] == "show" and sep_command[1] == "contact":
+                address_book.find_contact(sep_command[2].title())
+            elif sep_command[0] == "show" and sep_command[1] == "birthday":
+                print(address_book.days_to_birthday(int(sep_command[2])))
+            elif sep_command[0] == "show" and sep_command[1] == "all":
+                address_book.__str__()
+            elif sep_command[0] == "show" and sep_command[1] == "note":
+                print(note_list)
+            elif sep_command[0] == "edit" and sep_command[1] == "contact":
+                address_book.edit_contact(sep_command[2].title())
+            elif sep_command[0] == "edit" and sep_command[1] == "note":
+                for note in note_list:
+                    if note['title'] == sep_command[2]:
+                        change_index = sep_command.index('-change') if '-change' in sep_command else None
+                        if change_index:
+                            note['note'] = ' '.join(sep_command[change_index + 1:])
+                        else:
+                            print('You didn`t print text to change!\nTry again!')
+            elif sep_command[0] == "search" and sep_command[1] == "tags":
+                NoteRecord.tag_search(sep_command[2])
+            elif sep_command[0] == "sort" and sep_command[1] == "folders":
+                sort_folder_command(sep_command[2:])
+                print("Your folder just has been sorted!")
+            elif sep_command[0] == "delete" and sep_command[1] == "contact":
+                address_book.del_contact(sep_command[2].title())
+            elif sep_command[0] == "delete" and sep_command[1] == "note":
+                for note in note_list:
+                    if note['title'] == sep_command[2]:
+                        note_index = note_list.index(note)
+                        note_list.pop(note_index)
+            elif command == "help" or command == "reference":
+                help_command()
+            elif command in ["good bye", "close", "exit", "."]:
+                with open('data_test.bin', 'wb') as f:
+                    pickle.dump(address_book, f)
+                print("Good bye!\nHope see you soon!")
+                if note_list:
+                    NoteRecord().note_serialize(note_list)
+                break
+            else:
+                command_dict = {1: "add contact", 2: "add notes", 3: "add tag", 4: "show contact",
+                                5: "show birthday", 6: "show all", 7: "show note", 8: "edit contact",
+                                9: "edit note", 10: "search tags", 11: "sort folders", 12: "delete contact",
+                                13: "delete note", 14: "help", 15: "reference", 16: "close",
+                                17: "exit", 18: "good bye"}
+                for value in command_dict.values():
+                    ratio = int(difflib.SequenceMatcher(None, command, value).ratio() * 100)
+                    if ratio > 50:
+                        fixed_string = value[0] + value[1:]
+                        print(f"You entered unknown command <<{command}>>. Maybe it`s <<{fixed_string}>>? Try again.")
+                    elif ratio < 50:
+                        continue
+        except IndexError:
+            print("Wrong input! Entered information is not enough for operation!")
+        except KeyError:
+            print("Wrong input! Check entered information!")
 
 
 def help_command():
