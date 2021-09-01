@@ -26,7 +26,7 @@ def main():
         try:
             command = input("Enter your command\n>>").lower()
             sep_command = command.split(" ")
-            if sep_command[0] == "add" and sep_command[1] == "contact":# and len(sep_command) > 2:
+            if sep_command[0] == "add" and sep_command[1] == "contact": # and len(sep_command) > 2:
                 address_book.add_record(Record(sep_command[2].title(), sep_command[3], sep_command[4],
                                                sep_command[5], sep_command[6:]))
             elif sep_command[0] == "add" and sep_command[1] == "note" and len(sep_command[2:]) != 0:
