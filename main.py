@@ -26,9 +26,12 @@ def main():
         try:
             command = input("Enter your command\n>>").lower()
             sep_command = command.split(" ")
-            if sep_command[0] == "add" and sep_command[1] == "contact": # and len(sep_command) > 2:
-                address_book.add_record(Record(sep_command[2].title(), sep_command[3], sep_command[4],
-                                               sep_command[5], sep_command[6:]))
+            if sep_command[0] == "add" and sep_command[1] == "contact":
+                address_book.add_record(Record(sep_command[2].title(),
+                                               sep_command[3],
+                                               sep_command[4] if len(sep_command) > 4 else '-',
+                                               sep_command[5] if len(sep_command) > 5 else '-',
+                                               sep_command[6:] if len(sep_command) > 6 else '-'))
             elif sep_command[0] == "add" and sep_command[1] == "note" and len(sep_command[2:]) != 0:
                 tag_index = sep_command.index('-tag') if '-tag' in sep_command else len(sep_command)
                 title_index = sep_command.index('-title') if '-title' in sep_command else None
@@ -115,7 +118,7 @@ def help_command():
     Personal Assistant has a commands:
     1. "add contact" - for add name, address, contact
     information (phone, e-mail) and birthday to Address
-    book write "add" then all details and enter it;
+    book write "add contact" then details and enter it;
 
     2. "add notes" - for add notes write "add notes" then
     your note and enter it;
