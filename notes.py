@@ -1,6 +1,6 @@
-from operator import itemgetter
-import difflib
 import json
+import difflib
+from operator import itemgetter
 
 
 class NoteRecord:
@@ -18,18 +18,18 @@ class NoteRecord:
             'tag': self.tag
         }
 
-    def tag_search(self, tag):
+    @staticmethod
+    def tag_search(list_of_notes, input_tag):
         tag_list = []
-        for i in map(lambda x: x['tag'], self.record):
+        for i in map(lambda x: x['tag'], list_of_notes):
             tag_list.extend(i)
         tag_list = set(tag_list)
         tag_list_of_dict = []
         for item in tag_list:
-            ratio = int(difflib.SequenceMatcher(None, str(tag), str(item)).ratio() * 100)
+            ratio = int(difflib.SequenceMatcher(None, str(input_tag), str(item)).ratio() * 100)
             if ratio > 50:
-                tag = item
-                for i in self.record:
-                    if tag in i['tag']:
+                for i in list_of_notes:
+                    if item in i['tag']:
                         tag_list_of_dict.append({ratio: i['note']})
         sort_list = []
         for tag in tag_list_of_dict:
@@ -42,7 +42,6 @@ class NoteRecord:
         with open(self.filename, 'w') as file:
             json.dump(list_of_notes, file, sort_keys=True, indent=4)
 
-    def note_deserialize(self):
+    def deserialize(self):
         with open(self.filename, 'r') as file:
-            return json.load(file)
-
+            return json.load(file, sort_keys=True, indent=4)
