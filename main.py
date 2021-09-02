@@ -178,9 +178,9 @@ def help_command():
     save Notes and sort files in folders.
 
     Personal Assistant has a commands:
-    1. "add contact" - for add name, address, contact
-    information (phone, e-mail) and birthday to Address
-    book write "add contact" then details and enter it;
+    1. "add contact" - for add name, contact information
+    (phone, e-mail), birthday and address to Address book
+    write "add contact" then details and enter it;
 
     2. "add note" - for add note write "add note" then
     your note after write "-title" and title for your note
