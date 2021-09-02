@@ -35,7 +35,7 @@ class Phone:
 
     @phone.setter
     def phone(self, phone: str):
-        if re.search("(^\+?(38)?0(67|68|96|97|98|50|66|95|99|63|73|93|89|94)\d{7}$)", re.sub(r'\D', "", phone)):
+        if re.search("(^\+?(38)?0(44|67|68|96|97|98|50|66|95|99|63|73|93|89|94)\d{7}$)", re.sub(r'\D', "", phone)):
             if len(re.sub(r'\D', "", phone)) == 12:
                 self.__phone = '+' + re.sub(r'\D', "", phone)
             else:
