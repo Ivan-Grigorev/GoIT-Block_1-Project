@@ -6,9 +6,10 @@ It is your Personal Assistant and works with Address book, write,
 save Notes and sort files in folders.
 
 ###HOW TO INSTALL?    
-1.
-2.
-3.
+Use the package manager pip to install Personal Assistant.
+```buildoutcfg
+pip install bot
+```
 
 ###HOW TO USE?
 Read instruction for use Personal Assistant.
@@ -84,4 +85,7 @@ Lesia Fedorenko,
 Rostyslav Lytvynets,
 Eduard Rogulin,
 Ivan Grigorev.
+
+###LICENSE?
+MIT
 
