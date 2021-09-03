@@ -30,16 +30,16 @@ def main():
             sep_command = command.split(" ")
             if sep_command[0] == "add" and sep_command[1] == "contact":
                 name = input("Enter name, please\n>>").title()
-                phone = input("Enter phone, please\nTo skip, press 'Enter'\n>>")
+                phone = input("Enter phone, please\n(To skip, press 'Enter')\n>>")
                 if len(phone) == 0:
                     phone += '-'
-                email = input("Enter e-mail, please\nTo skip, press 'Enter'\n>>")
+                email = input("Enter e-mail, please\n(To skip, press 'Enter')\n>>")
                 if len(email) == 0:
                     email += '-'
-                birthday = input("Enter birthday, please\nTo skip, press 'Enter'\n>>")
+                birthday = input("Enter birthday, please\n(To skip, press 'Enter')\n>>")
                 if len(birthday) == 0:
                     birthday += '-'
-                address = input("Enter address, please\nTo skip, press 'Enter'\n>>")
+                address = input("Enter address, please\n(To skip, press 'Enter')\n>>")
                 if len(address) == 0:
                     address += '-'
                 address_book.add_record(Record(name, phone, email, birthday, address))
