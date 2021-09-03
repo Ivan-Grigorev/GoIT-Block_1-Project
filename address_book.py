@@ -166,3 +166,4 @@ class AddressBook(UserDict):
         print(f'Total contacts: {len(self.data)}')
         for key, val in self.data.items():
             print(f'{str(key)}:{str(val)}'.removesuffix(','))
+
