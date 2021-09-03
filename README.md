@@ -12,16 +12,20 @@ pip install bot
 Read instruction for use Personal Assistant.
 
     =====================================================
-                CLI - Command Line Interface
-                    Personal Assistant
+                 CLI - Command Line Interface
+                       Personal Assistant
     =====================================================
+
+    Personal Assistant works with Address book, write,
+    save Notes and sort files in folders.
 
     Personal Assistant has a commands:
     1. "add contact" - for add name, contact information
-    (phone, e-mail),birthday and address to Address book
-    write "add contact" then details and enter it;
+    (phone, e-mail), birthday and address to Address book
+    write "add contact" and enter command then Assistant
+    ask you details enter it;
 
-    2. "add note" - for add note write "add note" then 
+    2. "add note" - for add note write "add note" then
     your note after write "-title" and title for your note
     and enter it; additionally in this option you can add
     a tag to your note for this after title write "-tag"
@@ -46,7 +50,8 @@ Read instruction for use Personal Assistant.
     and enter it;
 
     8. "edit contact" - for edit contact information write
-    "edit contact" then name and enter it;
+    "edit contact" and enter command then Assistant ask
+    name enter it;
 
     9. "edit note" - for edit note write "edit note" then
     title after write "-edit" and new text and enter it;
@@ -75,6 +80,7 @@ Read instruction for use Personal Assistant.
     Personal Assistant, write one of "close", "exit" or
     "good bye" and enter command then you will exit from
     Command Line Interface.
+
 ### WHO MADE IT?
 The students from "Go IT" school (Kyiv, Ukraine): Lesia Fedorenko, Rostyslav Lytvynets, Eduard Rogulin, Ivan Grigorev.
 ### LICENSE?
