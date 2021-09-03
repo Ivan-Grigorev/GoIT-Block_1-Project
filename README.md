@@ -24,7 +24,7 @@ Read instruction for use Personal Assistant.
     1. "add contact" - for add name, contact information
     (phone, e-mail), birthday and address to Address book
     write "add contact" and enter command then Assistant
-    ask you details and enter it;
+    ask you details enter it;
 
     2. "add note" - for add note write "add note" then
     your note after write "-title" and title for your note
