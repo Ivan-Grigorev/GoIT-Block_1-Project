@@ -15,7 +15,7 @@ class Name:
 
     @name.setter
     def name(self, name: str):
-        if name.isalpha():
+        if len(name) > 0:
             self.__name = name
         else:
             print("Incorrect name!")
@@ -69,6 +69,7 @@ class Email:
             if re.search("^[\w\.-]+@[\w\.-]+(\.[\w]+)+", email):
                 self.__email = email
             else:
+                self.__email = '-'
                 print("The email is not saved because it has an incorrect format\n"
                       "Try to edit like the example: *****@***.***")
 
@@ -94,8 +95,9 @@ class Birthday:
                 if time.strptime(birthday, '%d/%m/%Y'):
                     self.__birthday = birthday
             except ValueError:
-                print('The date is not saved because it has an incorrect format\n'
-                      'Try to edit like the example: DD/MM/YYYY')
+                self.__birthday = '-'
+                print("The date is not saved because it has an incorrect format\n"
+                      "Try to edit like the example: DD/MM/YYYY")
 
     def __str__(self):
         return f"{self.__birthday}"
@@ -133,18 +135,18 @@ class AddressBook(UserDict):
 
     def del_contact(self, name):
         try:
-            question = input("Are you sure?: Y/N ").lower()
+            question = input("Are you sure?: Y/N\n>>").lower()
             if question == 'y':
                 self.data.pop(name)
-                print(f'{name} was deleted successfully')
+                print(f"{name} was successfully deleted.")
         except KeyError:
-            print('This contact does not exist in database')
+            print("This contact does not exist in Address Book")
 
     def edit_contact(self, name):
         print(self.data[name])
         edit_option = input("Enter an editable option (phone, email, birthday or address)"
-                            " and changed information:").lower()
-        sep_edit_option = edit_option.split(" ")
+                            " and information to change: ").lower()
+        sep_edit_option = edit_option.split(' ')
         data = str(self.data[name]).split(',')
         if sep_edit_option[0] == 'phone':
             data[0] = sep_edit_option[1]
@@ -173,6 +175,6 @@ class AddressBook(UserDict):
         return list
 
     def __str__(self):
-        print(f'Total contacts: {len(self.data)}')
+        print(f"Total contacts in Address Book: {len(self.data)}")
         for key, val in self.data.items():
-            print(f'{str(key)}:{str(val)}'.removesuffix(','))
+            print(f"{str(key)}:{str(val)}".removesuffix(','))
