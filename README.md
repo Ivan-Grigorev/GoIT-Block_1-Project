@@ -1,9 +1,6 @@
 # Go_IT-Block_1-Project
 ### WHAT IS THIS PROGRAM?
 This is Command Line Interface bot - Personal Assistant.
-### HOW TO INSTALL?
-It is your Personal Assistant and works with Address book, write,
-save Notes and sort files in folders.
 ### WHY SHOULD I USE IT?
 It is your Personal Assistant and works with Address book, write,
 save Notes and sort files in folders.
