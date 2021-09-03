@@ -1,17 +1,14 @@
-###WHAT IS THIS PROGRAM?
+# Go_IT-Block_1-Project
+### WHAT IS THIS PROGRAM?
 This is Command Line Interface bot - Personal Assistant.
-
-###WHY SHOULD I USE IT?
-It is your Personal Assistant and works with Address book, write,
-save Notes and sort files in folders.
-
-###HOW TO INSTALL?    
+### WHY SHOULD I USE IT?
+It is your Personal Assistant and works with Address book, write, save Notes and sort files in folders.
+### HOW TO INSTALL?
 Use the package manager pip to install Personal Assistant.
-```buildoutcfg
+```
 pip install bot
 ```
-
-###HOW TO USE?
+### HOW TO USE?
 Read instruction for use Personal Assistant.
 
     =====================================================
@@ -78,14 +75,7 @@ Read instruction for use Personal Assistant.
     Personal Assistant, write one of "close", "exit" or
     "good bye" and enter command then you will exit from
     Command Line Interface.
-
-###WHO MADE IT?
-The students from "Go IT" school (Kyiv, Ukraine):
-Lesia Fedorenko, 
-Rostyslav Lytvynets,
-Eduard Rogulin,
-Ivan Grigorev.
-
-###LICENSE?
+### WHO MADE IT?
+The students from "Go IT" school (Kyiv, Ukraine): Lesia Fedorenko, Rostyslav Lytvynets, Eduard Rogulin, Ivan Grigorev.
+### LICENSE?
 MIT
-
