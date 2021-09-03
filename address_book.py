@@ -35,14 +35,18 @@ class Phone:
 
     @phone.setter
     def phone(self, phone: str):
-        if re.search("(^\+?(38)?0(44|67|68|96|97|98|50|66|95|99|63|73|93|89|94)\d{7}$)", re.sub(r'\D', "", phone)):
-            if len(re.sub(r'\D', "", phone)) == 12:
-                self.__phone = '+' + re.sub(r'\D', "", phone)
-            else:
-                self.__phone = '+38' + re.sub(r'\D', "", phone)
+        if phone == '-':
+            self.__phone = phone
         else:
-            print("The phone is not saved because it has an incorrect format\n"
-                  "Try to edit like the example: +38(***)*******")
+            if re.search("(^\+?(38)?0(44|67|68|96|97|98|50|66|95|99|63|73|93|89|94)\d{7}$)", re.sub(r'\D', "", phone)):
+                if len(re.sub(r'\D', "", phone)) == 12:
+                    self.__phone = '+' + re.sub(r'\D', "", phone)
+                else:
+                    self.__phone = '+38' + re.sub(r'\D', "", phone)
+            else:
+                self.__phone = '-'
+                print("The phone is not saved because it has an incorrect format\n"
+                      "Try to edit like the example: +38(0**)*******")
 
     def __str__(self):
         return f"{self.__phone}"
@@ -59,11 +63,14 @@ class Email:
 
     @email.setter
     def email(self, email):
-        if email == '-' or re.search("^[\w\.-]+@[\w\.-]+(\.[\w]+)+", email):
+        if email == '-':
             self.__email = email
         else:
-            print("The email is not saved because it has an incorrect format\n"
-                  "Try to edit like the example: *****@***.***")
+            if re.search("^[\w\.-]+@[\w\.-]+(\.[\w]+)+", email):
+                self.__email = email
+            else:
+                print("The email is not saved because it has an incorrect format\n"
+                      "Try to edit like the example: *****@***.***")
 
     def __str__(self):
         return f"{self.__email}"
@@ -80,12 +87,15 @@ class Birthday:
 
     @birthday.setter
     def birthday(self, birthday):
-        try:
-            if birthday == '-' or time.strptime(birthday, '%d/%m/%Y'):
-                self.__birthday = birthday
-        except ValueError:
-            print('The date is not saved because it has an incorrect format\n'
-                  'Try to edit like the example: DD/MM/YYYY')
+        if birthday == '-':
+            self.__birthday = birthday
+        else:
+            try:
+                if time.strptime(birthday, '%d/%m/%Y'):
+                    self.__birthday = birthday
+            except ValueError:
+                print('The date is not saved because it has an incorrect format\n'
+                      'Try to edit like the example: DD/MM/YYYY')
 
     def __str__(self):
         return f"{self.__birthday}"
@@ -166,4 +176,3 @@ class AddressBook(UserDict):
         print(f'Total contacts: {len(self.data)}')
         for key, val in self.data.items():
             print(f'{str(key)}:{str(val)}'.removesuffix(','))
-
