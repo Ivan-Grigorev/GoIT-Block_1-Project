@@ -23,7 +23,8 @@ Read instruction for use Personal Assistant.
     Personal Assistant has a commands:
     1. "add contact" - for add name, contact information
     (phone, e-mail), birthday and address to Address book
-    write "add contact" then details and enter it;
+    write "add contact" and enter command then Assistant
+    ask you details and enter it;
 
     2. "add note" - for add note write "add note" then
     your note after write "-title" and title for your note
@@ -50,7 +51,8 @@ Read instruction for use Personal Assistant.
     and enter it;
 
     8. "edit contact" - for edit contact information write
-    "edit contact" then name and enter it;
+    "edit contact" and enter command then Assistant ask you
+    name enter it;
 
     9. "edit note" - for edit note write "edit note" then
     title after write "-edit" and new text and enter it;
