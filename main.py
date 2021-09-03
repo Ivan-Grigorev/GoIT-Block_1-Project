@@ -29,11 +29,20 @@ def main():
             command = input("Enter your command\n>>").lower()
             sep_command = command.split(" ")
             if sep_command[0] == "add" and sep_command[1] == "contact":
-                address_book.add_record(Record(sep_command[2].title(),
-                                               sep_command[3],
-                                               sep_command[4] if len(sep_command) > 4 else '-',
-                                               sep_command[5] if len(sep_command) > 5 else '-',
-                                               sep_command[6:] if len(sep_command) > 6 else '-'))
+                name = input("Enter name, please\n>>").title()
+                phone = input("Enter phone, please\nTo skip, press 'Enter'\n>>")
+                if len(phone) == 0:
+                    phone += '-'
+                email = input("Enter e-mail, please\nTo skip, press 'Enter'\n>>")
+                if len(email) == 0:
+                    email += '-'
+                birthday = input("Enter birthday, please\nTo skip, press 'Enter'\n>>")
+                if len(birthday) == 0:
+                    birthday += '-'
+                address = input("Enter address, please\nTo skip, press 'Enter'\n>>")
+                if len(address) == 0:
+                    address += '-'
+                address_book.add_record(Record(name, phone, email, birthday, address))
 
             elif sep_command[0] == "add" and sep_command[1] == "note":
                 title_ind = sep_command.index('-title') if '-title' in sep_command else None
@@ -81,7 +90,8 @@ def main():
                     print(f"Title: {note['title']}\nNote: {note['note']}\nTags: {note['tag']}\n")
 
             elif sep_command[0] == "edit" and sep_command[1] == "contact":
-                address_book.edit_contact(sep_command[2].title())
+                name = input("Enter name, please\n>>")
+                address_book.edit_contact(name.title())
 
             elif sep_command[0] == "edit" and sep_command[1] == "note":
                 change_index = sep_command.index('-edit') if '-edit' in sep_command else None
@@ -180,7 +190,8 @@ def help_command():
     Personal Assistant has a commands:
     1. "add contact" - for add name, contact information
     (phone, e-mail), birthday and address to Address book
-    write "add contact" then details and enter it;
+    write "add contact" and enter command then Assistant
+    ask you details enter it;
 
     2. "add note" - for add note write "add note" then
     your note after write "-title" and title for your note
@@ -207,7 +218,8 @@ def help_command():
     and enter it;
 
     8. "edit contact" - for edit contact information write
-    "edit contact" then name and enter it;
+    "edit contact" and enter command then Assistant ask
+    name enter it;
 
     9. "edit note" - for edit note write "edit note" then
     title after write "-edit" and new text and enter it;
