@@ -1,4 +1,4 @@
-# Go_IT-Block_1-Project
+# Go IT - Block 1 - Project
 ### WHAT IS THIS PROGRAM?
 This is Command Line Interface bot - Personal Assistant.
 ### WHY SHOULD I USE IT?
